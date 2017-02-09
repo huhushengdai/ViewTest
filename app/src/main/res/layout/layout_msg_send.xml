@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="vm"
+            type="com.blizzmi.viewtest.vm.ChatVm"/>
+    </data>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/message_head"
+        style="@style/MessageHead"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="12dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <FrameLayout
+        android:id="@+id/message_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/message_head"
+        android:paddingLeft="8dp">
+
+        <TextView
+            android:id="@+id/send_msg_text"
+            style="@style/MessageText"
+            android:background="#0ff"
+            android:gravity="left|center_vertical"
+            android:text="@{vm.text}"/>
+
+        <ImageView
+            android:id="@+id/send_msg_img"
+            style="@style/MessageImage"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/msg_media"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:visibility="gone">
+
+            <ImageView
+                style="@style/MessageVoice"
+                android:layout_marginRight="8dp"
+                android:scaleType="center"
+                android:src="@mipmap/ic_launcher" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/message_content"
+        android:src="@mipmap/ic_launcher" />
+
+
+    <TextView
+        android:id="@+id/msg_media_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/message_content"
+
+        android:textSize="10sp" />
+</RelativeLayout>
+</layout>

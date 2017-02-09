@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.blizzmi.activityoptions.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Hello World!" />
+
+    <ImageView
+        android:id="@+id/female"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="makeClipRevealAnimation"
+        android:src="@mipmap/bx_female"
+        android:transitionName="img" />
+
+    <ImageView
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="makeCustomAnimation"
+        android:src="@mipmap/bx_group_head"
+        android:transitionName="img" />
+
+    <ImageView
+        android:id="@+id/male"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="makeScaleUpAnimation"
+        android:src="@mipmap/bx_male"
+        android:transitionName="img" />
+
+    <ImageView
+        android:id="@+id/tack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="makeSceneTransitionAnimation"
+        android:src="@mipmap/ic_take_picture"
+        android:transitionName="img" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="makeThumbnailScaleUpAnimation"
+        android:src="@mipmap/logo"
+        android:transitionName="img" />
+</LinearLayout>
