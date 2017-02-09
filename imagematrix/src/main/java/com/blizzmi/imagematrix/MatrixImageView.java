@@ -100,6 +100,15 @@ public class MatrixImageView extends ImageView {
             initData();
             isInitData = true;
         }
+        //设置图片后，重新整理图片，使图片宽度缩放到刚好符合屏幕宽度
+        mDrawableWidth = mDrawable.getIntrinsicWidth();
+        mDrawableHeight = mDrawable.getIntrinsicHeight();
+
+        mDefaultScale = mScreenWidth / mDrawableWidth;//默认匹配屏幕的缩放率
+        mMinScale = mDefaultScale * MIN_RATIO;
+        mMaxScale = mDefaultScale * MAX_RATIO;
+        mLimitScale = mDefaultScale * LIMIT_RATIO;
+
 
         Matrix matrix = new Matrix();
         matrix.postScale(mDefaultScale, mDefaultScale);
@@ -138,15 +147,6 @@ public class MatrixImageView extends ImageView {
         wm.getDefaultDisplay().getSize(outSize);
         mScreenWidth = outSize.x;
         mScreenHeight = outSize.y;
-
-        //设置图片后，重新整理图片，使图片宽度缩放到刚好符合屏幕宽度
-        mDrawableWidth = mDrawable.getIntrinsicWidth();
-        mDrawableHeight = mDrawable.getIntrinsicHeight();
-
-        mDefaultScale = mScreenWidth / mDrawableWidth;//默认匹配屏幕的缩放率
-        mMinScale = mDefaultScale * MIN_RATIO;
-        mMaxScale = mDefaultScale * MAX_RATIO;
-        mLimitScale = mDefaultScale * LIMIT_RATIO;
     }
 
     @Override
