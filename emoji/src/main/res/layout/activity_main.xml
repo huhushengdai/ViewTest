@@ -20,12 +20,13 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.blizzmi.emoji.MainActivity">
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我是测试文字信息"
             android:background="@drawable/chat_send"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:onClick="click"/>
 
         <ImageView
             android:id="@+id/main_text"
