@@ -1,1 +1,1 @@
-include ':app', ':recycler', ':tackpic', ':horizontalrecycler', ':ninegrid', ':location', ':emoji', ':task', ':ontouch', ':progress', ':edit', ':activityoptions', ':imagematrix', ':voice', ':viewpager'
+include ':app', ':recycler', ':tackpic', ':horizontalrecycler', ':ninegrid', ':location', ':emoji', ':task', ':ontouch', ':progress', ':edit', ':activityoptions', ':imagematrix', ':voice', ':viewpager', ':merge', ':gesturelock', ':drawer'
