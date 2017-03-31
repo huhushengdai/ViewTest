@@ -57,7 +57,6 @@ public class ChoiceHeadActivity extends AppCompatActivity {
         if (requestCode == REQ_ALBUM_CODE && data != null) {
             Uri originalUri = data.getData();        //获得图片的uri
             ContentResolver resolver = getContentResolver();
-            ImageUtils.getBitmapSize()
         }
         setResult(RESULT_FAIL);
     }

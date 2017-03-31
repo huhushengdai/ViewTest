@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFEFF4"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="66dp"
+        android:src="@mipmap/logo" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/logo_mliao" />
+
+
+    <EditText
+        android:id="@+id/login_user_name"
+        style="@style/LoginEdit"
+        android:drawableLeft="@mipmap/user"
+         />
+
+    <View
+        style="@style/Line"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp" />
+
+    <EditText
+        android:id="@+id/login_password"
+        style="@style/LoginEdit"
+        android:drawableLeft="@mipmap/lock"
+        android:inputType="textPassword"
+         />
+
+    <View
+        style="@style/Line"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp" />
+
+    <!--登录按钮-->
+    <TextView
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/login_btn_n"
+        android:gravity="center"
+        android:onClick="login"
+        android:text="登录"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:text="忘记密码?"
+        android:textSize="10sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp">
+
+
+        <TextView
+            android:id="@+id/login_select_login_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="14dp"
+            android:text="使用其他方式登录"
+            android:textSize="12sp" />
+
+        <View
+            style="@style/Line"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="6dp"
+            android:layout_toLeftOf="@id/login_select_login_text" />
+
+        <View
+            style="@style/Line"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="46dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@id/login_select_login_text" />
+
+        <ImageView
+            android:id="@+id/login_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/login_select_login_text"
+            android:layout_alignStart="@+id/login_select_login_text"
+            android:layout_below="@+id/login_select_login_text"
+            android:onClick="qqLogin"
+            android:src="@mipmap/qq_login" />
+
+        <ImageView
+            android:id="@+id/login_weixin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/login_select_login_text"
+            android:layout_alignRight="@+id/login_select_login_text"
+            android:layout_below="@+id/login_select_login_text"
+            android:onClick="weixinLogin"
+            android:src="@mipmap/wechat_login" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="register"
+        android:padding="10dp"
+        android:text="注册账号"
+        android:textSize="16sp" />
+</LinearLayout>
