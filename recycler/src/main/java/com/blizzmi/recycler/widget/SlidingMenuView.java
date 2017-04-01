@@ -105,6 +105,11 @@ public class SlidingMenuView extends RecyclerView {
         return super.dispatchTouchEvent(e);
     }
 
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent e) {
+        return false;
+    }
+
     /**
      * 滚动监听
      */
