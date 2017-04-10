@@ -15,6 +15,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#f55"
+        android:visibility="gone" />
 
-        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_scroll">
+
+        <com.huhushengdai.linefeedview.widget.AutoLinefeedView
+            android:id="@+id/main_auto"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#f55" />
+    </ScrollView>
 </RelativeLayout>
