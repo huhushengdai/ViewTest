@@ -18,5 +18,8 @@
         android:layout_height="wrap_content"
         android:background="#5ff"
         />
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="frozen"/>
 </LinearLayout>
