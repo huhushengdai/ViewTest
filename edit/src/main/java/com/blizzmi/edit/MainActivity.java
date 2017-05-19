@@ -1,39 +1,46 @@
 package com.blizzmi.edit;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private EditText edit;
     private static final String z = "@.+";
+
+    boolean flag;
+
+    ArrayList<String> list = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        edit = (EditText) findViewById(R.id.main_edit);
+//        edit.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                return flag;
+//            }
+//        });
+//        for (int i = 0; i < 10; i++) {
+//            list.add("" + i);
+//        }
+
+        System.out.println("结果：" + (0%120));
+        ImageView imageView = (ImageView) findViewById(R.id.main_img);
+        imageView.setAlpha(0.5f);
     }
 
-    public void clickEvent(View view){
-        MediaPlayer mPlayer = new MediaPlayer();
-        mPlayer.reset();
-        try {
-            mPlayer.setDataSource(this,Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.input_password_new_again));
-            mPlayer.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //播放
-        mPlayer.start();
+    private static final String SERVICE_REGEX = ".*";//service的正则表达式
+
+    public void clickEvent(View view) {
+        flag = !flag;
+        list.remove("1");
+        System.out.println("size:" + list.size());
     }
 }
