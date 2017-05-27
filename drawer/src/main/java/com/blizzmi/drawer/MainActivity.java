@@ -1,11 +1,11 @@
 package com.blizzmi.drawer;
 
-import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.view.View;
+
+import com.blizzmi.drawer.widget.BubbleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,14 +13,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BubbleImageView img = (BubbleImageView) findViewById(R.id.main_img);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.m_bg);
+//        img.setExpectedWidth(300);
+        img.setImageBitmap(bitmap);
+//        BubbleImageView img = (BubbleImageView) findViewById(R.id.main_img);
+//        Drawable drawable = getResources().getDrawable(R.mipmap.m_bg);
+//        Bitmap bitmap = img.rBitmap(drawable);
+//        img.setImageBitmap(bitmap);
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.m_bg);
+//        img.setLocalImageBitmap(bitmap,R.drawable.mesbox_y_9);
     }
 
-    public void startPassword(View view) {
-        startActivity(new Intent(this, Main2Activity.class));
-    }
 
-    public void startDrawer(View view){
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.activity_main);
-        drawerLayout.openDrawer(Gravity.LEFT);
-    }
 }
