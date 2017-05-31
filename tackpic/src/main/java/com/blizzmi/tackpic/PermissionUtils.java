@@ -1,6 +1,5 @@
 package com.blizzmi.tackpic;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -78,7 +77,7 @@ public class PermissionUtils {
 //            BLog.d(TAG,"申请权限:"+permissionName[i]);
         }
         ActivityCompat.requestPermissions(activity,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO},
+                permissionName,
                 requestCode);
     }
 }
