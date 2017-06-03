@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BubbleImageView img = (BubbleImageView) findViewById(R.id.main_img);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.m_bg);
-//        img.setExpectedWidth(300);
         img.setImageBitmap(bitmap);
 //        BubbleImageView img = (BubbleImageView) findViewById(R.id.main_img);
 //        Drawable drawable = getResources().getDrawable(R.mipmap.m_bg);

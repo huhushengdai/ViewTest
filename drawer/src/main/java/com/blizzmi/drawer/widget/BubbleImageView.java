@@ -4,11 +4,10 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -18,9 +17,9 @@ import com.blizzmi.drawer.R;
 
 public class BubbleImageView extends ImageView {
 
-    private int maxWidth = -1;
-    private int minWidth = -1;
-    private int expectedWidth = -1;
+    private int mMaxWidth = -1;
+    private int mMinWidth = -1;
+    private int mExpectedWidth = -1;
     private Drawable bgDrawable;
 
     public BubbleImageView(Context context) {
@@ -39,13 +38,16 @@ public class BubbleImageView extends ImageView {
             int attr = a.getIndex(i);
             switch (attr) {
                 case R.styleable.Overlap_maxWidth:
-                    maxWidth = a.getInteger(attr, -1);
+                    mMaxWidth = a.getInteger(attr, -1);
                     break;
                 case R.styleable.Overlap_expectedWidth:
-                    expectedWidth = a.getInteger(attr, -1);
+                    int expectedWidth = a.getInteger(attr, -1);
+                    if (expectedWidth != -1) {
+                        setExpectedWidth(expectedWidth);
+                    }
                     break;
                 case R.styleable.Overlap_minWidth:
-                    minWidth = a.getInteger(attr, -1);
+                    mMinWidth = a.getInteger(attr, -1);
                     break;
                 case R.styleable.Overlap_dstBg:
                     bgDrawable = a.getDrawable(attr);
@@ -53,40 +55,6 @@ public class BubbleImageView extends ImageView {
             }
         }
         a.recycle();
-    }
-
-
-    @Override//图片缩放还未处理
-    public void draw(Canvas canvas) {
-        if (getDrawable() == null) {
-            return;
-        }
-        if (!(getDrawable() instanceof BitmapDrawable) || bgDrawable == null) {
-            super.draw(canvas);
-            return;
-        }
-        BitmapDrawable drawable = (BitmapDrawable) getDrawable();
-
-        int width = drawable.getIntrinsicWidth();
-        int height = drawable.getIntrinsicHeight();
-
-        Paint paint = drawable.getPaint();
-        paint.setAntiAlias(true);
-
-
-        int sc = canvas.saveLayer(0, 0, width, height
-                , paint, Canvas.ALL_SAVE_FLAG);
-
-
-//        patch.draw(canvas, rect);//目标
-        bgDrawable.setBounds(0, 0, width, height);
-        bgDrawable.draw(canvas);
-
-
-        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-        drawable.draw(canvas);//原文件
-
-        canvas.restoreToCount(sc);
     }
 
     /**
@@ -97,31 +65,46 @@ public class BubbleImageView extends ImageView {
      * @param expectedWidth 图片期望宽度
      */
     public void setExpectedWidth(int expectedWidth) {
-        if (maxWidth != -1 && expectedWidth > maxWidth) {
-            this.expectedWidth = maxWidth;
-        } else if (minWidth != -1 && expectedWidth < minWidth) {
-            this.expectedWidth = minWidth;
+        if (mMaxWidth != -1 && expectedWidth > mMaxWidth) {
+            this.mExpectedWidth = mMaxWidth;
+        } else if (mMinWidth != -1 && expectedWidth < mMinWidth) {
+            this.mExpectedWidth = mMinWidth;
         } else {
-            this.expectedWidth = expectedWidth;
+            this.mExpectedWidth = expectedWidth;
         }
     }
 
     @Override
     public void setImageBitmap(Bitmap bm) {
-        if (expectedWidth != -1 && bm.getWidth() != expectedWidth) {
-            int width = bm.getWidth();
-            int height = bm.getHeight();
-            float scale = (float) (expectedWidth * 1.0 / width);
+        super.setImageBitmap(getRoundCornerImage(bm));
+    }
 
-            Matrix matrix = new Matrix();
-            matrix.postScale(scale, scale);
-            Bitmap newBm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-            if (!bm.isRecycled()) {
-                bm.recycle();
-            }
-            super.setImageBitmap(newBm);
-        } else {
-            super.setImageBitmap(bm);
+    public Bitmap getRoundCornerImage(Bitmap bitmap_in) {
+        if (bgDrawable == null) {
+            return bitmap_in;
         }
+        int width = bitmap_in.getWidth();
+        int height = bitmap_in.getHeight();
+        if (mExpectedWidth != -1 && width != mExpectedWidth) {
+            height = (int) (mExpectedWidth * 1.00 / width * height);
+            width = mExpectedWidth;
+        }
+
+        Bitmap roundConcerImage = Bitmap.createBitmap(width, height,
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(roundConcerImage);
+        Paint paint = new Paint();
+        Rect rect = new Rect(0, 0, width, height);
+        Rect rectF = new Rect(0, 0, bitmap_in.getWidth(), bitmap_in.getHeight());
+        paint.setAntiAlias(true);
+
+        bgDrawable.setBounds(0, 0, width, height);
+        bgDrawable.draw(canvas);
+
+        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+        canvas.drawBitmap(bitmap_in, rectF, rect, paint);
+        bitmap_in.recycle();
+
+        return roundConcerImage;
     }
 }
