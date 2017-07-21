@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -17,9 +19,6 @@ import com.blizzmi.drawer.R;
 
 public class BubbleImageView extends ImageView {
 
-    private int mMaxWidth = -1;
-    private int mMinWidth = -1;
-    private int mExpectedWidth = -1;
     private Drawable bgDrawable;
 
     public BubbleImageView(Context context) {
@@ -37,18 +36,7 @@ public class BubbleImageView extends ImageView {
         for (int i = 0; i < count; i++) {
             int attr = a.getIndex(i);
             switch (attr) {
-                case R.styleable.Overlap_maxWidth:
-                    mMaxWidth = a.getInteger(attr, -1);
-                    break;
-                case R.styleable.Overlap_expectedWidth:
-                    int expectedWidth = a.getInteger(attr, -1);
-                    if (expectedWidth != -1) {
-                        setExpectedWidth(expectedWidth);
-                    }
-                    break;
-                case R.styleable.Overlap_minWidth:
-                    mMinWidth = a.getInteger(attr, -1);
-                    break;
+
                 case R.styleable.Overlap_dstBg:
                     bgDrawable = a.getDrawable(attr);
                     break;
@@ -57,54 +45,40 @@ public class BubbleImageView extends ImageView {
         a.recycle();
     }
 
-    /**
-     * 设置图片期望的宽度(必须在setImageBitmap 方法调用前才有效)
-     * 如果有 最大宽 限制，当 期望宽 大于 最大宽 时，期望宽 为 最大宽
-     * 如果有 最小宽 限制，当 期望宽 小于 最小宽 时，期望宽 为 最小宽
-     *
-     * @param expectedWidth 图片期望宽度
-     */
-    public void setExpectedWidth(int expectedWidth) {
-        if (mMaxWidth != -1 && expectedWidth > mMaxWidth) {
-            this.mExpectedWidth = mMaxWidth;
-        } else if (mMinWidth != -1 && expectedWidth < mMinWidth) {
-            this.mExpectedWidth = mMinWidth;
-        } else {
-            this.mExpectedWidth = expectedWidth;
+    @Override//图片缩放还未处理
+    public void draw(Canvas canvas) {
+        if (getDrawable() == null) {
+            return;
         }
-    }
-
-    @Override
-    public void setImageBitmap(Bitmap bm) {
-        super.setImageBitmap(getRoundCornerImage(bm));
-    }
-
-    public Bitmap getRoundCornerImage(Bitmap bitmap_in) {
-        if (bgDrawable == null) {
-            return bitmap_in;
+        if (!(getDrawable() instanceof BitmapDrawable) || bgDrawable == null) {
+            super.draw(canvas);
+            return;
         }
-        int width = bitmap_in.getWidth();
-        int height = bitmap_in.getHeight();
-        if (mExpectedWidth != -1 && width != mExpectedWidth) {
-            height = (int) (mExpectedWidth * 1.00 / width * height);
-            width = mExpectedWidth;
-        }
+        BitmapDrawable drawable = (BitmapDrawable) getDrawable();
+        Bitmap srcBitmap = drawable.getBitmap();//源图片
 
-        Bitmap roundConcerImage = Bitmap.createBitmap(width, height,
-                Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(roundConcerImage);
-        Paint paint = new Paint();
-        Rect rect = new Rect(0, 0, width, height);
-        Rect rectF = new Rect(0, 0, bitmap_in.getWidth(), bitmap_in.getHeight());
+        int width = getMeasuredWidth();
+        int height = getMeasuredHeight();
+
+        Paint paint = drawable.getPaint();
         paint.setAntiAlias(true);
+
+        paint.setXfermode(null);
+        int sc = canvas.saveLayer(0, 0, width, height
+                , paint, Canvas.ALL_SAVE_FLAG);
+
 
         bgDrawable.setBounds(0, 0, width, height);
         bgDrawable.draw(canvas);
 
-        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-        canvas.drawBitmap(bitmap_in, rectF, rect, paint);
-        bitmap_in.recycle();
 
-        return roundConcerImage;
+        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+        RectF rect = new RectF(0, 0, width, height);
+        Rect rectF = new Rect(0, 0, width, height);
+        canvas.drawBitmap(srcBitmap, rectF, rect, paint);
+
+        canvas.restoreToCount(sc);
     }
+
+
 }

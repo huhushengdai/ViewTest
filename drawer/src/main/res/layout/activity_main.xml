@@ -9,13 +9,23 @@
     android:orientation="vertical"
     tools:context="com.blizzmi.drawer.MainActivity">
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="load"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="params"/>
+
     <com.blizzmi.drawer.widget.BubbleImageView
         android:id="@+id/main_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
         android:layout_margin="10dp"
-        app:expectedWidth="300"
+        android:background="#7f02"
+        app:expectedWidth="500"
         app:dstBg="@drawable/mesbox_y_9" />
 
     <com.blizzmi.drawer.widget.LogoLoadingView

@@ -70,6 +70,7 @@ public class LogoLoadingView extends ImageView {
          * 设置View的离屏缓冲。在绘图的时候新建一个“层”，所有的操作都在该层而不会影响该层以外的图像
          * 必须设置，否则设置的PorterDuffXfermode会无效，具体原因不明
          */
+        paint.setXfermode(null);
         int sc=canvas.saveLayer(0,0,totalW,totalH,paint, Canvas.ALL_SAVE_FLAG);
         canvas.drawBitmap(bitmap,0,0,null);
         paint.setXfermode(xfermode);
@@ -81,7 +82,7 @@ public class LogoLoadingView extends ImageView {
         /**
          * 还原画布，与canvas.saveLayer配套使用
          */
-//        canvas.restoreToCount(sc);
+        canvas.restoreToCount(sc);
 //        if (currentTop>0){
 //            currentTop--;
 //            postInvalidate();

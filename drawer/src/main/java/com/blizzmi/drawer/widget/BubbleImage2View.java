@@ -2,9 +2,7 @@ package com.blizzmi.drawer.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
@@ -67,18 +65,19 @@ public class BubbleImage2View extends ImageView {
         }
         BitmapDrawable drawable = (BitmapDrawable) getDrawable();
 
-        int width = drawable.getIntrinsicWidth();
-        int height = drawable.getIntrinsicHeight();
+        int width = drawable.getIntrinsicWidth();//需要绘制的宽度
+        int height = drawable.getIntrinsicHeight();//需要绘制的高度
+
+
 
         Paint paint = drawable.getPaint();
         paint.setAntiAlias(true);
 
-
+        paint.setXfermode(null);
         int sc = canvas.saveLayer(0, 0, width, height
                 , paint, Canvas.ALL_SAVE_FLAG);
 
 
-//        patch.draw(canvas, rect);//目标
         bgDrawable.setBounds(0, 0, width, height);
         bgDrawable.draw(canvas);
 
@@ -89,39 +88,24 @@ public class BubbleImage2View extends ImageView {
         canvas.restoreToCount(sc);
     }
 
-    /**
-     * 设置图片期望的宽度(必须在setImageBitmap 方法调用前才有效)
-     * 如果有 最大宽 限制，当 期望宽 大于 最大宽 时，期望宽 为 最大宽
-     * 如果有 最小宽 限制，当 期望宽 小于 最小宽 时，期望宽 为 最小宽
-     *
-     * @param expectedWidth 图片期望宽度
-     */
-    public void setExpectedWidth(int expectedWidth) {
-        if (maxWidth != -1 && expectedWidth > maxWidth) {
-            this.expectedWidth = maxWidth;
-        } else if (minWidth != -1 && expectedWidth < minWidth) {
-            this.expectedWidth = minWidth;
-        } else {
-            this.expectedWidth = expectedWidth;
-        }
-    }
-
-    @Override
-    public void setImageBitmap(Bitmap bm) {
-        if (expectedWidth != -1 && bm.getWidth() != expectedWidth) {
-            int width = bm.getWidth();
-            int height = bm.getHeight();
-            float scale = (float) (expectedWidth * 1.0 / width);
-
-            Matrix matrix = new Matrix();
-            matrix.postScale(scale, scale);
-            Bitmap newBm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-            if (!bm.isRecycled()) {
-                bm.recycle();
-            }
-            super.setImageBitmap(newBm);
-        } else {
-            super.setImageBitmap(bm);
-        }
-    }
+//    @Override
+//    public void draw(Canvas canvas) {
+////        super.onDraw(canvas);
+//        rectF.top=0;
+//        /**
+//         * 设置View的离屏缓冲。在绘图的时候新建一个“层”，所有的操作都在该层而不会影响该层以外的图像
+//         * 必须设置，否则设置的PorterDuffXfermode会无效，具体原因不明
+//         */
+//        paint.setXfermode(null);
+//        int sc=canvas.saveLayer(0,0,totalW,totalH,paint, Canvas.ALL_SAVE_FLAG);
+//        canvas.drawBitmap(bitmap,0,0,null);
+//        paint.setXfermode(xfermode);
+//        paint.setColor(Color.RED);
+//        Bitmap src = BitmapFactory.decodeResource(getResources(),R.mipmap.m_bg);
+//        canvas.drawBitmap(src,0,0,paint);
+//        /**
+//         * 还原画布，与canvas.saveLayer配套使用
+//         */
+//        canvas.restoreToCount(sc);
+//    }
 }
