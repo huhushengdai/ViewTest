@@ -13,6 +13,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -25,7 +26,7 @@ import android.util.TypedValue;
  * @author WangLizhi
  * @version 1.0
  */
-public class TextDrawable extends Drawable{
+public class TextDrawable extends Drawable {
 
 
     /* Platform XML constants for typeface */
@@ -49,7 +50,7 @@ public class TextDrawable extends Drawable{
     private Rect mTextBounds;
     /* Text string to draw */
     private CharSequence mText = "";
-
+    private Paint mBackgroundPaint = new Paint();
     /* Attribute lists to pull default values from the current theme */
     private static final int[] themeAttributes = {
             android.R.attr.textAppearance
@@ -88,7 +89,7 @@ public class TextDrawable extends Drawable{
             ap = context.obtainStyledAttributes(appearanceId, appearanceAttributes);
         }
         if (ap != null) {
-            for (int i=0; i < ap.getIndexCount(); i++) {
+            for (int i = 0; i < ap.getIndexCount(); i++) {
                 int attr = ap.getIndex(i);
                 switch (attr) {
                     case 0: //Text Size
@@ -135,6 +136,7 @@ public class TextDrawable extends Drawable{
 
     /**
      * Set the text that will be displayed
+     *
      * @param text Text to display
      */
     public void setText(CharSequence text) {
@@ -161,6 +163,7 @@ public class TextDrawable extends Drawable{
 
     /**
      * Set the text size.  The value will be interpreted in "sp" units
+     *
      * @param size Text size value, in sp
      */
     public void setTextSize(float size) {
@@ -169,6 +172,7 @@ public class TextDrawable extends Drawable{
 
     /**
      * Set the text size, using the supplied complex units
+     *
      * @param unit Units for the text size, such as dp or sp
      * @param size Text size value
      */
@@ -176,6 +180,15 @@ public class TextDrawable extends Drawable{
         float dimension = TypedValue.applyDimension(unit, size,
                 mResources.getDisplayMetrics());
         setRawTextSize(dimension);
+    }
+
+    /**
+     * 设置背景颜色
+     *
+     * @param color 背景颜色
+     */
+    public void setBackgroundColor(@ColorInt int color) {
+        mBackgroundPaint.setColor(color);
     }
 
     /*
@@ -198,6 +211,7 @@ public class TextDrawable extends Drawable{
 
     /**
      * Set the horizontal stretch factor of the text
+     *
      * @param size Text scale factor
      */
     public void setTextScaleX(float size) {
@@ -218,11 +232,12 @@ public class TextDrawable extends Drawable{
      * Set the text alignment.  The alignment itself is based on the text layout direction.
      * For LTR text NORMAL is left aligned and OPPOSITE is right aligned.
      * For RTL text, those alignments are reversed.
-     * @param align Text alignment value.  Should be set to one of:
      *
-     *   {@link Layout.Alignment#ALIGN_NORMAL},
-     *   {@link Layout.Alignment#ALIGN_NORMAL},
-     *   {@link Layout.Alignment#ALIGN_OPPOSITE}.
+     * @param align Text alignment value.  Should be set to one of:
+     *              <p>
+     *              {@link Layout.Alignment#ALIGN_NORMAL},
+     *              {@link Layout.Alignment#ALIGN_NORMAL},
+     *              {@link Layout.Alignment#ALIGN_OPPOSITE}.
      */
     public void setTextAlign(Layout.Alignment align) {
         if (mTextAlignment != align) {
@@ -251,7 +266,6 @@ public class TextDrawable extends Drawable{
      * and turns on the fake bold and italic bits in the Paint if the
      * Typeface that you provided does not have all the bits in the
      * style that you specified.
-     *
      */
     public void setTypeface(Typeface tf, int style) {
         if (style > 0) {
@@ -284,6 +298,7 @@ public class TextDrawable extends Drawable{
 
     /**
      * Set a single text color for all states
+     *
      * @param color Color value such as {@link Color#WHITE} or {@link Color#argb(int, int, int, int)}
      */
     public void setTextColor(int color) {
@@ -292,6 +307,7 @@ public class TextDrawable extends Drawable{
 
     /**
      * Set the text color as a state list
+     *
      * @param colorStateList ColorStateList of text colors, such as inflated from an R.color resource
      */
     public void setTextColor(ColorStateList colorStateList) {
@@ -304,7 +320,7 @@ public class TextDrawable extends Drawable{
      * TextDrawable cannot properly measure the bounds this drawable will need.
      * You must call {@link #setBounds(int, int, int, int) setBounds()} before
      * applying this TextDrawable to any View.
-     *
+     * <p>
      * Calling this method with <code>null</code> will remove any Path currently attached.
      */
     public void setTextPath(Path path) {
@@ -328,7 +344,7 @@ public class TextDrawable extends Drawable{
         } else {
             //Measure text bounds
             float desired = Layout.getDesiredWidth(mText, mTextPaint);
-            mTextLayout = new StaticLayout(mText, mTextPaint, (int)desired,
+            mTextLayout = new StaticLayout(mText, mTextPaint, (int) desired,
                     mTextAlignment, 1.0f, 0.0f, false);
 
             mTextBounds.set(0, 0, mTextLayout.getWidth(), mTextLayout.getHeight());
@@ -345,7 +361,7 @@ public class TextDrawable extends Drawable{
         int newColor = mTextColors.getColorForState(stateSet, Color.WHITE);
         if (mTextPaint.getColor() != newColor) {
             mTextPaint.setColor(newColor);
-            return  true;
+            return true;
         }
 
         return false;
@@ -396,6 +412,7 @@ public class TextDrawable extends Drawable{
     public void draw(Canvas canvas) {
         if (mTextPath == null) {
             //Allow the layout to draw the text
+            canvas.drawRect(0, 0, getIntrinsicWidth(), getIntrinsicHeight(), mBackgroundPaint);
             mTextLayout.draw(canvas);
         } else {
             //Draw directly on the canvas using the supplied path

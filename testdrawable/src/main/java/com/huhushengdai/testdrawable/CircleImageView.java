@@ -67,7 +67,7 @@ public class CircleImageView extends ImageView {
 
     public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-
+        setScaleType(ScaleType.CENTER);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0);
 
         mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_circle_border_width, DEFAULT_BORDER_WIDTH);
@@ -83,14 +83,11 @@ public class CircleImageView extends ImageView {
         }
     }
 
-
-
     @Override
     protected void onDraw(Canvas canvas) {
         if (getDrawable() == null) {
             return;
         }
-
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, mDrawableRadius, mBitmapPaint);
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, mBorderRadius, mBorderPaint);
     }
@@ -129,25 +126,12 @@ public class CircleImageView extends ImageView {
     }
 
     @Override
-    public void setImageBitmap(Bitmap bm) {
-        super.setImageBitmap(bm);
-        mBitmap = bm;
-        setup();
-    }
-
-    @Override
     public void setImageDrawable(Drawable drawable) {
         super.setImageDrawable(drawable);
         mBitmap = getBitmapFromDrawable(drawable);
         setup();
     }
 
-    @Override
-    public void setImageResource(int resId) {
-        super.setImageResource(resId);
-        mBitmap = getBitmapFromDrawable(getDrawable());
-        setup();
-    }
 
     private Bitmap getBitmapFromDrawable(Drawable drawable) {
         if (drawable == null) {
@@ -210,21 +194,14 @@ public class CircleImageView extends ImageView {
     }
 
     private void updateShaderMatrix() {
-        float scale;
+
         float dx = 0;
         float dy = 0;
 
         mShaderMatrix.set(null);
 
-        if (mBitmapWidth * mDrawableRect.height() > mDrawableRect.width() * mBitmapHeight) {
-            scale = mDrawableRect.height() / (float) mBitmapHeight;
-            dx = (mDrawableRect.width() - mBitmapWidth * scale) * 0.5f;
-        } else {
-            scale = mDrawableRect.width() / (float) mBitmapWidth;
-            dy = (mDrawableRect.height() - mBitmapHeight * scale) * 0.5f;
-        }
-
-        mShaderMatrix.setScale(scale, scale);
+        dx = (mDrawableRect.width() - mBitmapWidth) * 0.5f;
+        dy = (mDrawableRect.height() - mBitmapHeight ) * 0.5f;
         mShaderMatrix.postTranslate((int) (dx + 0.5f) + mBorderWidth, (int) (dy + 0.5f) + mBorderWidth);
 
         mBitmapShader.setLocalMatrix(mShaderMatrix);

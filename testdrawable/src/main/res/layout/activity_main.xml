@@ -10,10 +10,15 @@
         android:layout_height="wrap_content"
         android:text="Hello World!" />
 
-    <ImageView
-        android:id="@+id/main_img"
+    <!--<ImageView-->
+        <!--android:id="@+id/main_img"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:background="#f94"/>-->
+
+    <com.huhushengdai.testdrawable.CircleImageView
+        android:id="@+id/main_img2"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher"
-        android:background="#f94"/>
+        android:background="#394"/>
 </LinearLayout>

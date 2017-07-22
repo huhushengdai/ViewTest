@@ -4,4 +4,13 @@
         <attr name="circle_border_width" format="dimension" />
         <attr name="circle_border_color" format="color" />
     </declare-styleable>
+
+    <!--重叠ImageView-->
+    <declare-styleable name="Overlap">
+        <!--需要的背景形状-->
+        <attr name="dstBg" format="reference" />
+        <attr name="maxWidth" format="integer" />
+        <attr name="minWidth" format="integer" />
+        <attr name="expectedWidth" format="integer" />
+    </declare-styleable>
 </resources>
