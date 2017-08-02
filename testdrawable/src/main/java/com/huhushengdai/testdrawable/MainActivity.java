@@ -14,10 +14,10 @@ public class MainActivity extends AppCompatActivity {
 //        ImageView img = (ImageView) findViewById(R.id.main_img);
 
 
-        TextDrawable drawable = new TextDrawable(this);
+        Text2Drawable drawable = new Text2Drawable(this);
         drawable.setText("45");
 //        drawable.setTextColor(Color.GREEN);
-        drawable.setTextSize(24);
+//        drawable.setTextSize(24);
         drawable.setBackgroundColor(Color.YELLOW);
 //        drawable.setBounds(0,0,10,10);
 //        img.setImageDrawable(drawable);

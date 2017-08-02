@@ -7,6 +7,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.text.Layout;
 import android.text.TextPaint;
@@ -79,4 +80,14 @@ public class Text2Drawable extends Drawable {
     public int getIntrinsicHeight() {
         return (int) (mTextWidth * 1.5);
     }
+
+    /**
+     * 设置背景颜色
+     *
+     * @param color 背景颜色
+     */
+    public void setBackgroundColor(@ColorInt int color) {
+        mBackgroundPaint.setColor(color);
+    }
+
 }
