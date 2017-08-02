@@ -345,7 +345,7 @@ public class TextDrawable extends Drawable {
             //Measure text bounds
             float desired = Layout.getDesiredWidth(mText, mTextPaint);
             mTextLayout = new StaticLayout(mText, mTextPaint, (int) desired,
-                    mTextAlignment, 1.0f, 0.0f, false);
+                    mTextAlignment, 1.0f, 0.0f, true);
 
             mTextBounds.set(0, 0, mTextLayout.getWidth(), mTextLayout.getHeight());
         }
@@ -414,6 +414,8 @@ public class TextDrawable extends Drawable {
             //Allow the layout to draw the text
             canvas.drawRect(0, 0, getIntrinsicWidth(), getIntrinsicHeight(), mBackgroundPaint);
             mTextLayout.draw(canvas);
+//            canvas.drawText(mText.toString(),getIntrinsicWidth()/2,getIntrinsicHeight()/2,mTextPaint);
+//            canvas.drawText(mText,0,mText.length(),30,50,mTextPaint);
         } else {
             //Draw directly on the canvas using the supplied path
             canvas.drawTextOnPath(mText.toString(), mTextPath, 0, 0, mTextPaint);
