@@ -8,13 +8,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".SecondActivity" />
-        <activity android:name=".TestTransformMatrixActivity">
+        <activity android:name=".TestTransformMatrixActivity"></activity>
+        <activity
+            android:name=".ThirdActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
-        <activity android:name=".ThirdActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".TimeMatrixActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
