@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <com.blizzmi.activityoptions.widget.BubbleImageView
+        android:id="@+id/item_list_img"
+        style="@style/ListImg"
+        android:layout_gravity="right"
+        app:dstBg="@drawable/mesbox_y_9"
+        android:transitionName="img"
+        />
+
+
+</LinearLayout>
